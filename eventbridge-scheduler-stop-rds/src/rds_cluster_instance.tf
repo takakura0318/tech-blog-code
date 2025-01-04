@@ -1,5 +1,5 @@
 resource "aws_rds_cluster_instance" "cluster_instances" {
-  count                      = 1
+  count                      = 2
   identifier                 = "aurora-cluster-${count.index}"
   cluster_identifier         = aws_rds_cluster.default.id
   instance_class             = "db.t3.medium"

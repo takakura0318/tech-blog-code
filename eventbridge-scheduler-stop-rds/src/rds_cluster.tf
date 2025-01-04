@@ -2,6 +2,9 @@ resource "random_password" "db_initial_password" {
   length           = 32
   special          = true
   override_special = "_%?"
+  keepers = { // 自動生成
+    password_version = "1"
+  }
 }
 
 resource "aws_rds_cluster" "default" {
@@ -26,10 +29,10 @@ resource "aws_rds_cluster" "default" {
   storage_encrypted               = false
   deletion_protection             = false
 
-#  lifecycle {
-#    prevent_destroy = true
-#    ignore_changes  = [master_password, engine_version, availability_zones]
-#  }
+  lifecycle {
+    prevent_destroy = true
+    ignore_changes  = [master_password, engine_version, availability_zones]
+  }
 
   tags = {
     Name = "aurora-cluster"
