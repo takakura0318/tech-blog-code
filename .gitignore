@@ -1,0 +1,7 @@
+# ディレクトリ名が「.terraform」であるものを除外
+**/.terraform/*
+**/.idea/*
+# ファイル名が「*.tfstate」にマッチしているものを除外
+*.tfstate
+*.tfstate.*
+*.tfvars
