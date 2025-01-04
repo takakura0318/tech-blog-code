@@ -62,30 +62,30 @@ resource "aws_scheduler_schedule" "aurora_stop" {
 
 // 動作確認用
 // (定期的: 毎日 20:20 JST)
-resource "aws_scheduler_schedule" "aurora_stop" {
-  name       = "aurora-stop"
-  group_name = "default"
-  flexible_time_window {
-    mode = "OFF"
-  }
-
-  // 毎日 (day-of-week は問わない) 20:20 JST
-  // cron(Minute Hour Day-of-month Month Day-of-week Year)
-  // 日・月は「*」＝毎日、曜日は「?」としています。
-  schedule_expression = "cron(50 20 * * ? *)"
-  schedule_expression_timezone = "Asia/Tokyo"
-
-  target {
-    arn      = "arn:aws:scheduler:::aws-sdk:rds:stopDBCluster"
-    role_arn = aws_iam_role.eventbridge-scheduler-rds-start-stop-role.arn
-    input = jsonencode({
-      DbClusterIdentifier = aws_rds_cluster.default.cluster_identifier
-    })
-
-    retry_policy {
-      maximum_event_age_in_seconds = 600
-      maximum_retry_attempts       = 1
-    }
-  }
-}
+#resource "aws_scheduler_schedule" "aurora_stop" {
+#  name       = "aurora-stop"
+#  group_name = "default"
+#  flexible_time_window {
+#    mode = "OFF"
+#  }
+#
+#  // 毎日 (day-of-week は問わない) 20:20 JST
+#  // cron(Minute Hour Day-of-month Month Day-of-week Year)
+#  // 日・月は「*」＝毎日、曜日は「?」としています。
+#  schedule_expression = "cron(50 20 * * ? *)"
+#  schedule_expression_timezone = "Asia/Tokyo"
+#
+#  target {
+#    arn      = "arn:aws:scheduler:::aws-sdk:rds:stopDBCluster"
+#    role_arn = aws_iam_role.eventbridge-scheduler-rds-start-stop-role.arn
+#    input = jsonencode({
+#      DbClusterIdentifier = aws_rds_cluster.default.cluster_identifier
+#    })
+#
+#    retry_policy {
+#      maximum_event_age_in_seconds = 600
+#      maximum_retry_attempts       = 1
+#    }
+#  }
+#}
 
